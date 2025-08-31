@@ -104,6 +104,7 @@ Test on Debian/Ubuntu systems:
 Your personal reward in an epoch depends on how much **BETH** you commit compared to other participants.  
 The distribution is **proportional**, meaning your share is:
 
+Your WORM reward = (Your BETH committed / Total BETH committed in the epoch) × Total WORM for the epoch
 
 ### 🔢 Example Calculation
 
