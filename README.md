@@ -1,4 +1,4 @@
-# 🐉 SHAI-HULUD 🪱
+# 🐉 Shai-Hulud 🪱
 
 Here you will find the instructions to participate in the Shai-Hulud incentivized testnet! Users who will help us in testing the network may earn community allocations of the future WORM token!
 
@@ -29,7 +29,7 @@ Test on Debian/Ubuntu systems:
    ```
    cargo install --path .
    ```
-## 6. Burn ETH and Immediately Mint BETH & submit a proof
+## 6. Burn ETH and Mint BETH
 
    Burn 1 ETH, and use 0.999 of it in the same transaction (i.e., full spend = 0.999, fee = 0.001).
    This means no remaining amount is left for later spending: 
@@ -39,7 +39,7 @@ Test on Debian/Ubuntu systems:
    ```
    This will mint 0.999 BETH to your address
    
-## 7. Congrats! 0.999 BETH has been minted for `0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1`! 
+## 7. Congrats! 0.999 BETH has been minted for you! 
    To verify the minted balance:
 
    ```
@@ -64,7 +64,7 @@ Test on Debian/Ubuntu systems:
 }
    ```
    Each coin in the output will have a unique ID and associated balance.
-## 9. Burn ETH and Spend Only Partially
+## 9. (Optional) Burn ETH and Spend Only Partially
    If you don’t want to lock the entire burn amount, you can spend part of a coin’s balance.
    For example, burn 1 ETH, but only spend 0.5 now:
    ```
@@ -79,7 +79,7 @@ Test on Debian/Ubuntu systems:
    
    Use the coin ID from the step #8 and specify how much to spend, the fee, and the receiver address: 
    ```
-   worm-miner spend --id 1 --amount 0.3 --fee 0.1 --private-key [YOUR PRIVATE-KEY] --receiver 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e --network sepolia
+   worm-miner spend --id 1 --amount 0.3 --fee 0.1 --private-key [YOUR PRIVATE-KEY] --receiver [RECEIVER ADDRESS] --network sepolia
    ```
    This command creates a spend transaction from that coin, leaving the unused balance available for future spends.
 
@@ -99,7 +99,7 @@ Test on Debian/Ubuntu systems:
 ## ⏱️ Epochs and Reward Distribution
 
 - **Epoch Duration:** Each epoch lasts **30 minutes**.  
-- **Fixed Rewards:** A fixed total amount of **WORM** is generated in every epoch (e.g., `X WORM per epoch`).  
+- **Fixed Rewards:** A fixed total amount of **WORM** is generated in every epoch (50 WORM per epoch).  
 
 Your personal reward in an epoch depends on how much **BETH** you commit compared to other participants.  
 The distribution is **proportional**, meaning your share is:
