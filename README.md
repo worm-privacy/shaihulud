@@ -1,6 +1,6 @@
-# 🐉 SHIHULUD 🪱
+# 🐉 SHAI-HULUD 🪱
 
-Here you will find the instructions to participate in the Shihulud incentivized testnet! Users who will help us in testing the network may earn community allocations of the future WORM token!
+Here you will find the instructions to participate in the Shai-Hulud incentivized testnet! Users who will help us in testing the network may earn community allocations of the future WORM token!
 
 In order to participate in the testnet you'll need:
 
@@ -35,7 +35,7 @@ Test on Debian/Ubuntu systems:
    This means no remaining amount is left for later spending: 
 
    ```
-   worm-miner burn --network anvil --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d  --amount 1 --spend 0.999 --fee 0.001
+   worm-miner burn --network sepolia --private-key [YOUR PRIVATE-KEY]  --amount 1 --spend 0.999 --fee 0.001
    ```
    This will mint 0.999 BETH to your address
    
@@ -43,7 +43,7 @@ Test on Debian/Ubuntu systems:
    To verify the minted balance:
 
    ```
-   worm-miner info --network anvil --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+   worm-miner info --network sepolia --private-key [YOUR PRIVATE-KEY]
    ```
 
 ## 8. List your available coins:
@@ -69,8 +69,8 @@ Test on Debian/Ubuntu systems:
    For example, burn 1 ETH, but only spend 0.5 now:
    ```
    worm-miner burn \
-   --network anvil \
-   --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d \
+   --network sepolia \
+   --private-key [YOUR PRIVATE-KEY] \
    --amount 1 \
    --spend 0.5 \
    --fee 0.001 
@@ -79,7 +79,7 @@ Test on Debian/Ubuntu systems:
    
    Use the coin ID from the step #8 and specify how much to spend, the fee, and the receiver address: 
    ```
-   worm-miner spend --id 1 --amount 0.3 --fee 0.1 --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d2171b23b1d --receiver 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e --network anvil
+   worm-miner spend --id 1 --amount 0.3 --fee 0.1 --private-key [YOUR PRIVATE-KEY] --receiver 0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e --network sepolia
    ```
    This command creates a spend transaction from that coin, leaving the unused balance available for future spends.
 
@@ -133,7 +133,7 @@ At the end of the epoch, when each participant calls `claim`, they will receive 
 ### 1. Get Epoch Information
 Before participating, you can check the current epoch and related details:
 ```bash
-worm-miner info --network sepolia
+worm-miner info --network sepolia --private-key [YOUR PRIVATE-KEY]
 ```
 example output:
 ```
@@ -159,7 +159,7 @@ To register for mining, use the participate command:
 worm-miner participate \
 --amount-per-epoch 0.002 \
 --num-epochs 3 \
---private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d \
+--private-key [YOUR PRIVATE KEY] \
 --network sepolia
 ```
 
@@ -177,7 +177,7 @@ worm-miner claim \
 --from-epoch 0 \
 --network sepolia \
 --num-epochs 1 \
---private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+--private-key [YOUR PRIVATE-KEY]
 
 ```
 Where:
