@@ -35,7 +35,12 @@ Test on Debian/Ubuntu systems:
    This means no remaining amount is left for later spending: 
 
    ```
-   worm-miner burn --network sepolia --private-key [YOUR PRIVATE-KEY]  --amount 1 --spend 0.999 --fee 0.001
+   worm-miner burn \
+   --network sepolia \
+   --private-key [YOUR PRIVATE-KEY] \
+   --amount 1 \
+   --spend 0.999 \
+   --fee 0.001
    ```
    This will mint 0.999 BETH to your address
    
@@ -43,7 +48,9 @@ Test on Debian/Ubuntu systems:
    To verify the minted balance:
 
    ```
-   worm-miner info --network sepolia --private-key [YOUR PRIVATE-KEY]
+   worm-miner info \
+   --network sepolia \
+   --private-key [YOUR PRIVATE-KEY]
    ```
 
 ## 8. List your available coins:
@@ -51,7 +58,8 @@ Test on Debian/Ubuntu systems:
    After burning ETH, not all of it may be consumed immediately. The unspent portions are stored as coins.
    You can list all coins linked to your account with:
    ```
-   worm-miner ls --network sepolia
+   worm-miner ls \
+   --network sepolia
    ```
    example out put : 
    ```
@@ -79,7 +87,13 @@ Test on Debian/Ubuntu systems:
    
    Use the coin ID from the step #8 and specify how much to spend, the fee, and the receiver address: 
    ```
-   worm-miner spend --id 1 --amount 0.3 --fee 0.1 --private-key [YOUR PRIVATE-KEY] --receiver [RECEIVER ADDRESS] --network sepolia
+   worm-miner spend \
+    --id 1 \
+    --amount 0.3 \
+    --fee 0.1 \
+    --private-key [YOUR PRIVATE-KEY] \
+    --receiver [YOUR RECEIVER ADDRESS] \
+    --network sepolia
    ```
    This command creates a spend transaction from that coin, leaving the unused balance available for future spends.
 
@@ -197,3 +211,97 @@ Participation Flow:
 - Use worm-miner participate to commit BETH for upcoming epochs.
 
 - After epochs are completed, use worm-miner claim to collect your WORM rewards.
+
+
+## 11. recover 
+
+The `recover` command allows you to complete a failed or pending burn operation using one of two modes:
+
+1. `by-id` – use a previous burn request ID stored in `burn.json`
+2. `manual` – provide all required fields manually
+
+---
+## ⚠️ Version Compatibility Notice
+
+> **Important:** In older versions of `worm-miner`, the `burn.json` file was **not implemented**.  
+> If you're trying to recover a burn made using an older version, you **must use the `manual` recover mode** and extract the `burn-key` from the terminal logs (see instructions below).
+
+---
+## 🔹 Mode 1: Recover by Burn ID (`by-id`)
+
+```bash
+worm-miner recover by-id \
+  --id 7 \
+  --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d \
+  --network sepolia \
+  --spend 0.3
+```
+
+### 🔸 Description
+
+- This mode loads the burn data from a file called `burn.json`, which stores all burn requests and their status.
+- The burn record is matched using the `--id` value.
+- The fields `burnKey`, `fee`, and `spend` are read from the file.
+- You can optionally override the `spend` value via the `--spend` flag.
+
+### 🔸 Example `burn.json` entry
+
+```json
+{
+  "burnKey": "11011230705853362308279774829532420853772751767967972175647383828240844149226",
+  "fee": "1000000000000000",
+  "id": "7",
+  "network": "anvil",
+  "spend": "9800000000000000000"
+}
+```
+
+### 🔸 When `burn.json` Does Not Exist
+
+If the `burn.json` file is missing or the ID is not found:
+
+1. Check the terminal logs from the original `burn` command.
+2. Look for a line like this:
+
+```
+Your burn_key: Fp(0x185822be9b9effb2890c0d271d924c48bf5724fcc39667d01545004aff6351ea)
+```
+
+3. Extract the **inner hex** (without `Fp(...)`) and use it with the `manual` mode.
+
+---
+
+## 🔹 Mode 2: Manual Recover (`manual`)
+
+```bash
+worm-miner recover manual \
+  --burn-key 0x8054550578899000515354714786627786190315231566992014878285563593195695546211 \
+  --fee 0.001 \
+  --spend 0.002 \
+  --network sepolia \
+  --private-key 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+```
+
+### 🔸 Description
+
+- You must provide all fields manually:
+  - `--burn-key`: The 0x-prefixed hex string from the terminal logs (without `Fp(...)`)
+  - `--fee`: Must match the exact value used in the original burn
+  - `--spend`: Can be any value; it does **not** need to match the original spend
+  - `--network` → The target network (anvil, sepolia, etc.).
+- Use this mode when `burn.json` is missing or if you prefer full control over inputs
+
+---
+
+## ⚠️ Important Behavior
+
+- In `by-id` mode:
+  - If `--spend` is **not** provided, the value is read from `burn.json`
+  - If `--spend` **is** provided, it overrides the value in `burn.json`
+- In `manual` mode:
+  - All values are required
+- In both modes:
+  - The fee must exactly match the one used in the original burn
+  - The burn key must be correctly formatted (0x hex, no `Fp(...)`)
+
+---
