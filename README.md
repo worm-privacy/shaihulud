@@ -58,7 +58,7 @@ Test on Debian/Ubuntu systems:
    After burning ETH, not all of it may be consumed immediately. The unspent portions are stored as coins.
    You can list all coins linked to your account with:
    ```
-   worm-miner ls \
+   worm-miner ls coin \
    --network sepolia
    ```
    example out put : 
@@ -225,6 +225,33 @@ The `recover` command allows you to complete a failed or pending burn operation 
 
 > **Important:** In older versions of `worm-miner`, the `burn.json` file was **not implemented**.  
 > If you're trying to recover a burn made using an older version, you **must use the `manual` recover mode** and extract the `burn-key` from the terminal logs (see instructions below).
+## 🔍 Viewing Past Burn Entries
+
+To view previously stored burn transactions, use:
+
+```bash
+worm-miner ls burn --network sepolia
+```
+
+This command will output something like:
+
+```
+Found 1 entries in burn.json
+Filtering entries for network: "sepolia"
+Found 1 entries for network "sepolia":
+  1: {
+    "burnKey": "5083540099124139698947315280994634262447462006671899327629371391356088123013",
+    "fee": "1000000000000000",
+    "id": "1",
+    "network": "sepolia",
+    "spend": "500000000000000000"
+  }
+```
+
+From this output:
+- The `id` can be used in `recover by-id`
+- The `burnKey` and `fee` can be used in `recover manual`
+
 
 ---
 ## 🔹 Mode 1: Recover by Burn ID (`by-id`)
